@@ -151,7 +151,7 @@ input:focus {
   border-radius: 8px;
   color: #fff;
   width: 100px;
-  height: 40px;
+  padding: 10px;
   cursor: pointer;
 }
 
