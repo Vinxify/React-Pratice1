@@ -4,6 +4,7 @@ import FeedbackContext from "../context/FeedbackContext";
 
 function FeedbackStats() {
   const { feedback } = useContext(FeedbackContext);
+  console.log(feedback);
 
   let average =
     feedback.reduce((acc, cur) => {

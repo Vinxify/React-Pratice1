@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "./shared/Card.jsx";
 import RatingSelect from "./RatingSelect";
 import Button from "./shared/Button.jsx";
@@ -13,7 +13,15 @@ function FeedbackForm() {
   const [text, setText] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(true);
 
-  const { addFeedback } = useContext(FeedbackContext);
+  const { addFeedback, feedbackEdit, updatedFeedback } =
+    useContext(FeedbackContext);
+
+  useEffect(() => {
+    if (feedbackEdit.edit === true) {
+      setText(feedbackEdit.item.text);
+      setBtnDisabled(false);
+    }
+  }, [feedbackEdit]);
 
   const handleSumbit = (e) => {
     e.preventDefault();
@@ -22,7 +30,12 @@ function FeedbackForm() {
         text,
         rating,
       };
-      addFeedback(newFeedback);
+
+      if (feedbackEdit.edit === true) {
+        updatedFeedback(feedbackEdit.item.id, newFeedback);
+      } else {
+        addFeedback(newFeedback);
+      }
     }
     setText("");
   };
