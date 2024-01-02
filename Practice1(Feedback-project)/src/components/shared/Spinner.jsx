@@ -1,4 +1,4 @@
-import spinner from "../../assests/spinner-loading.gif";
+import spinner from "../../assests/spinning-loading.gif";
 
 function Spinner() {
   return (
