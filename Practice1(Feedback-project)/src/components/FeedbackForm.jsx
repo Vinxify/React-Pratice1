@@ -4,11 +4,16 @@ import RatingSelect from "./RatingSelect";
 import Button from "./shared/Button.jsx";
 import { useState } from "react";
 
-function FeedbackForm({ handleAddFeedback }) {
+import { useContext } from "react";
+import FeedbackContext from "../context/FeedbackContext.jsx";
+
+function FeedbackForm() {
   const [rating, setRating] = useState(10);
   const [message, setMessage] = useState("");
   const [text, setText] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(true);
+
+  const { addFeedback } = useContext(FeedbackContext);
 
   const handleSumbit = (e) => {
     e.preventDefault();
@@ -17,7 +22,7 @@ function FeedbackForm({ handleAddFeedback }) {
         text,
         rating,
       };
-      handleAddFeedback(newFeedback);
+      addFeedback(newFeedback);
     }
     setText("");
   };

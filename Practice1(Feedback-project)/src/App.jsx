@@ -1,34 +1,65 @@
 import "./App.css";
-import { v4 as uuidv4 } from "uuid";
 import FeedbackList from "./components/FeedbackList.jsx";
 import Header from "./components/Header";
-import FeedbackData from "./components/data/FeedbackData.jsx";
 import FeedbackStats from "./components/FeedbackStats.jsx";
-import { useState } from "react";
+
 import FeedbackForm from "./components/FeedbackForm.jsx";
+import AboutPage from "./components/AboutPage.jsx";
+import { FeedbackProvider } from "./context/FeedbackContext.jsx";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import AboutPageIcon from "./components/AboutPageIcon.jsx";
 
 function App() {
-  const [feedback, setFeedback] = useState(FeedbackData);
-
-  const addFeedback = (newFeedback) => {
-    newFeedback.id = uuidv4();
-    setFeedback([newFeedback, ...feedback]);
-  };
-
-  const deleteFeedback = (id) => {
-    if (window.confirm("Are you sure that you want to delete")) {
-      setFeedback(feedback.filter((item) => item.id !== id));
-    }
-  };
   return (
-    <>
-      <Header />
-      <div className='container'>
-        <FeedbackForm handleAddFeedback={addFeedback} />
-        <FeedbackStats feedback={feedback} />
-        <FeedbackList feedback={feedback} handleDelete={deleteFeedback} />
-      </div>
-    </>
+    <FeedbackProvider>
+      <BrowserRouter>
+        <Header />
+        <div className='container'>
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <>
+                  <FeedbackForm />
+
+                  <FeedbackStats />
+
+                  <FeedbackList />
+                </>
+              }
+            />
+
+            <Route path='/about' element={<AboutPage />} />
+          </Routes>
+
+          <AboutPageIcon />
+        </div>
+      </BrowserRouter>
+    </FeedbackProvider>
+
+    // <FeedbackProvider>
+    //   <Router>
+    //     <Header />
+    //     <div className='container'>
+    //       <Routes>
+    //         <Route
+    //           path='/'
+    //           element={
+    //             <>
+    //               <FeedbackForm />
+    //               <FeedbackStats />
+    //               <FeedbackList />
+    //             </>
+    //           }
+    //         />
+    //         <Route path='/about' element={<AboutPage />} />
+    //       </Routes>
+
+    //       <AboutPageIcon />
+    //     </div>
+    //   </Router>
+    // </FeedbackProvider>
   );
 }
 
