@@ -22,7 +22,7 @@ function FeedbackItem({ item }) {
           deleteFeedback(item.id);
         }}
       >
-        <FaTimes color='purple' />
+        <FaTimes color='red' />
       </button>
       <div className='text-display'>{item.text}</div>
     </Card>
