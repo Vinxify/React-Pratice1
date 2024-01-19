@@ -40,3 +40,8 @@
 .read-the-docs {
   color: #888;
 }
+
+.loading {
+  font-size: 4.8rem;
+  margin-top: 2rem;
+}

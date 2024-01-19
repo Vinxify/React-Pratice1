@@ -9,12 +9,14 @@ import { FeedbackProvider } from "./context/FeedbackContext.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import AboutPageIcon from "./components/AboutPageIcon.jsx";
+import Loading from "./components/shared/Loading.jsx";
 
 function App() {
   return (
     <FeedbackProvider>
       <BrowserRouter>
         <Header />
+
         <div className='container'>
           <Routes>
             <Route
