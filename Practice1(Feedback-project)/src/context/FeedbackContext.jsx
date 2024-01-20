@@ -10,6 +10,7 @@ const FeedbackContext = createContext();
 export const FeedbackProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [feedback, setFeedback] = useState(FeedbackData);
+  const [webError, setWebError] = useState("");
 
   const [feedbackEdit, setFeedbackEdit] = useState({
     item: {},
@@ -20,15 +21,23 @@ export const FeedbackProvider = ({ children }) => {
 
   useEffect(() => {
     fetchFeedback();
+    setWebError("");
   }, []);
 
   const fetchFeedback = async () => {
     try {
+      setIsLoading(true);
       const response = await fetch(`${API_URL}?_sort=id&_order=desc`);
+      if (!response.ok) throw new Error("Something went wrong");
       const data = await response.json();
+      console.log(data);
       setFeedback(data);
+    } catch (err) {
+      console.error(`${err.message}`);
+      setWebError(`${err.message}`);
+    } finally {
       setIsLoading(false);
-    } catch (err) {}
+    }
   };
 
   // Add feedback
@@ -39,37 +48,55 @@ export const FeedbackProvider = ({ children }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newFeedback),
       });
+      console.log(response);
+      if (!response || !response.ok) throw new Error("something went wrong");
       const data = await response.json();
 
       setFeedback([data, ...feedback]);
-    } catch (error) {}
+    } catch (err) {
+      setWebError(`${err.message}`);
+    }
   };
 
   // Delete feedback
   const deleteFeedback = async (id) => {
-    if (window.confirm("Are you sure that you want to delete")) {
-      await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    try {
+      if (window.confirm("Are you sure that you want to delete")) {
+        const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+        console.log(response);
+        if (!response && !response.ok) throw new Error("Error from deleting");
 
-      setFeedback(feedback.filter((item) => item.id !== id));
+        setFeedback(feedback.filter((item) => item.id !== id));
+      }
+    } catch (err) {
+      console.error(`${err.message}`);
+      setWebError(`${err.message}`);
     }
   };
 
   // updated feedback
 
   const updatedFeedback = async (id, updatedItem) => {
-    const response = await fetch(`${API_URL}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedItem),
-    });
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedItem),
+      });
 
-    const data = await response.json();
+      if (!response || !response.ok) throw new Error("something went wrong");
 
-    setFeedback(
-      feedback.map((item) => (item.id === id ? { ...item, ...data } : item))
-    );
+      const data = await response.json();
+
+      setFeedback(
+        feedback.map((item) => (item.id === id ? { ...item, ...data } : item))
+      );
+    } catch (err) {
+      console.error(`${err}`);
+      setWebError(`${err}`);
+    }
   };
 
   const editFeedback = (item) => {
@@ -89,6 +116,7 @@ export const FeedbackProvider = ({ children }) => {
         deleteFeedback,
         editFeedback,
         updatedFeedback,
+        webError,
       }}
     >
       {children}

@@ -25,7 +25,7 @@ function FeedbackForm() {
 
   const handleSumbit = (e) => {
     e.preventDefault();
-    if (text.trim().length > 10) {
+    if (text.trim().length > 5) {
       const newFeedback = {
         text,
         rating,
@@ -44,9 +44,12 @@ function FeedbackForm() {
     if (text === "") {
       setBtnDisabled(true);
       setMessage(null);
-    } else if (text !== "" && text.trim().length <= 10) {
+    } else if (text !== "" && text.trim().length <= 5) {
       setBtnDisabled(true);
-      setMessage("Text should be more than 10 characters");
+      setMessage("Text should be more than 5 characters");
+    } else if (text.trim().length > 20) {
+      setBtnDisabled(true);
+      setMessage("Text should no be more than 15 characters");
     } else {
       setMessage(null);
       setBtnDisabled(false);
