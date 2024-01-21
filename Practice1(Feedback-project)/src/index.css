@@ -8,7 +8,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #202142;
+  background-color: rgb(77, 59, 48);
   color: #fff;
   line-height: 1.6;
 }
@@ -87,7 +87,7 @@ header {
 
 .rating li:hover,
 .num-display {
-  background: #ff6a95;
+  background: rgb(55, 65, 81);
   color: #fff;
 }
 
@@ -96,7 +96,7 @@ header {
 }
 
 [type="radio"]:checked ~ label {
-  background: #ff6a95;
+  background: rgb(55, 65, 81);
   color: #fff;
 }
 
@@ -160,7 +160,7 @@ input:focus {
 }
 
 .btn-secondary {
-  background: #ff6a95;
+  background: rgb(77, 59, 48);
 }
 
 .btn:hover {
@@ -213,8 +213,8 @@ input:focus {
 
 .error {
   text-align: center;
-  font-size: 2rem;
-  padding: 4.8rem;
+  font-size: 1.5rem;
+  padding: 2rem;
 }
 
 @media (max-width: 600px) {

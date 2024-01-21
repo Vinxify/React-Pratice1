@@ -34,8 +34,6 @@ function App() {
 
             <Route path='/about' element={<AboutPage />} />
           </Routes>
-
-          <AboutPageIcon />
         </div>
       </BrowserRouter>
     </FeedbackProvider>

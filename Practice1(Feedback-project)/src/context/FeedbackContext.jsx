@@ -117,6 +117,8 @@ export const FeedbackProvider = ({ children }) => {
         editFeedback,
         updatedFeedback,
         webError,
+        setWebError,
+        setFeedbackEdit,
       }}
     >
       {children}

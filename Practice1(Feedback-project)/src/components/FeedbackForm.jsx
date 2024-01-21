@@ -13,8 +13,13 @@ function FeedbackForm() {
   const [text, setText] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(true);
 
-  const { addFeedback, feedbackEdit, updatedFeedback } =
-    useContext(FeedbackContext);
+  const {
+    addFeedback,
+    feedbackEdit,
+    updatedFeedback,
+    setWebError,
+    setFeedbackEdit,
+  } = useContext(FeedbackContext);
 
   useEffect(() => {
     if (feedbackEdit.edit === true) {
@@ -25,6 +30,7 @@ function FeedbackForm() {
 
   const handleSumbit = (e) => {
     e.preventDefault();
+    setWebError("");
     if (text.trim().length > 5) {
       const newFeedback = {
         text,
@@ -38,13 +44,18 @@ function FeedbackForm() {
       }
     }
     setText("");
+    setBtnDisabled(true);
+    setFeedbackEdit({
+      item: {},
+      edit: false,
+    });
   };
 
   const handleTextChange = (e) => {
     if (text === "") {
       setBtnDisabled(true);
       setMessage(null);
-    } else if (text !== "" && text.trim().length <= 5) {
+    } else if (text !== "" && text.trim().length < 5) {
       setBtnDisabled(true);
       setMessage("Text should be more than 5 characters");
     } else if (text.trim().length > 20) {

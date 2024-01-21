@@ -10,9 +10,17 @@ import ErrorMessage from "./shared/ErrorMessage.jsx";
 function FeedbackList() {
   const { feedback, isLoading, webError } = useContext(FeedbackContext);
 
-  if (!isLoading && (feedback.length === 0 || !feedback)) {
-    return <p>No feedback yet</p>;
+  if (!isLoading && !webError && (feedback.length === 0 || !feedback)) {
+    return (
+      <>
+        <br />
+        <p>No feedback yet</p>
+        <br />
+        <p>Please input a feedback</p>
+      </>
+    );
   }
+  if (webError) return <ErrorMessage message={webError} />;
 
   if (!isLoading && !webError) {
     return isLoading ? (
@@ -34,8 +42,6 @@ function FeedbackList() {
       </div>
     );
   }
-
-  if (webError) return <ErrorMessage message={webError} />;
 }
 
 export default FeedbackList;
